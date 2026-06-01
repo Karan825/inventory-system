@@ -12,6 +12,12 @@ export default function Orders() {
   
   const [selectedCustomerId, setSelectedCustomerId] = useState('');
   const [orderItems, setOrderItems] = useState([{ product_id: '', quantity: 1 }]);
+  const [toast, setToast] = useState('');
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 3000);
+  };
 
   useEffect(() => {
     fetchOrders();
@@ -48,27 +54,28 @@ export default function Orders() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!selectedCustomerId) return alert('Select a customer');
+    if (!selectedCustomerId) return showToast('Error: Select a customer');
     
     // Filter out items without product_id
     const validItems = orderItems
       .filter(item => item.product_id)
       .map(item => ({ product_id: parseInt(item.product_id), quantity: parseInt(item.quantity) }));
       
-    if (validItems.length === 0) return alert('Add at least one valid product');
+    if (validItems.length === 0) return showToast('Error: Add at least one valid product');
 
     try {
       await axios.post(`${API_URL}/orders`, {
         customer_id: parseInt(selectedCustomerId),
         items: validItems
       });
+      showToast('Order created successfully');
       setShowModal(false);
       setSelectedCustomerId('');
       setOrderItems([{ product_id: '', quantity: 1 }]);
       fetchOrders();
       fetchProducts(); // Refresh stock
     } catch (error) {
-      alert('Error creating order: ' + (error.response?.data?.detail || error.message));
+      showToast('Error: ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -76,9 +83,10 @@ export default function Orders() {
     if (window.confirm('Are you sure you want to delete this order?')) {
       try {
         await axios.delete(`${API_URL}/orders/${id}`);
+        showToast('Order deleted successfully');
         fetchOrders();
       } catch (error) {
-        alert('Error deleting order');
+        showToast('Error deleting order');
       }
     }
   };
@@ -180,6 +188,7 @@ export default function Orders() {
           </div>
         </div>
       )}
+      {toast && <div className="toast">{toast}</div>}
     </div>
   );
 }

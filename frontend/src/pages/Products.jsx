@@ -9,6 +9,12 @@ export default function Products() {
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ name: '', sku: '', price: '', stock_quantity: '' });
   const [editingId, setEditingId] = useState(null);
+  const [toast, setToast] = useState('');
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 3000);
+  };
 
   useEffect(() => {
     fetchProducts();
@@ -34,15 +40,17 @@ export default function Products() {
 
       if (editingId) {
         await axios.put(`${API_URL}/products/${editingId}`, payload);
+        showToast('Product updated successfully');
       } else {
         await axios.post(`${API_URL}/products`, payload);
+        showToast('Product created successfully');
       }
       setShowModal(false);
       setFormData({ name: '', sku: '', price: '', stock_quantity: '' });
       setEditingId(null);
       fetchProducts();
     } catch (error) {
-      alert('Error saving product: ' + (error.response?.data?.detail || error.message));
+      showToast('Error: ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -50,9 +58,10 @@ export default function Products() {
     if (window.confirm('Are you sure you want to delete this product?')) {
       try {
         await axios.delete(`${API_URL}/products/${id}`);
+        showToast('Product deleted successfully');
         fetchProducts();
       } catch (error) {
-        alert('Error deleting product');
+        showToast('Error deleting product');
       }
     }
   };
@@ -149,6 +158,7 @@ export default function Products() {
           </div>
         </div>
       )}
+      {toast && <div className="toast">{toast}</div>}
     </div>
   );
 }

@@ -8,6 +8,12 @@ export default function Customers() {
   const [customers, setCustomers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ full_name: '', email: '', phone_number: '' });
+  const [toast, setToast] = useState('');
+
+  const showToast = (msg) => {
+    setToast(msg);
+    setTimeout(() => setToast(''), 3000);
+  };
 
   useEffect(() => {
     fetchCustomers();
@@ -26,11 +32,12 @@ export default function Customers() {
     e.preventDefault();
     try {
       await axios.post(`${API_URL}/customers`, formData);
+      showToast('Customer created successfully');
       setShowModal(false);
       setFormData({ full_name: '', email: '', phone_number: '' });
       fetchCustomers();
     } catch (error) {
-      alert('Error saving customer: ' + (error.response?.data?.detail || error.message));
+      showToast('Error: ' + (error.response?.data?.detail || error.message));
     }
   };
 
@@ -38,9 +45,10 @@ export default function Customers() {
     if (window.confirm('Are you sure you want to delete this customer?')) {
       try {
         await axios.delete(`${API_URL}/customers/${id}`);
+        showToast('Customer deleted successfully');
         fetchCustomers();
       } catch (error) {
-        alert('Error deleting customer');
+        showToast('Error deleting customer');
       }
     }
   };
@@ -108,6 +116,7 @@ export default function Customers() {
           </div>
         </div>
       )}
+      {toast && <div className="toast">{toast}</div>}
     </div>
   );
 }
