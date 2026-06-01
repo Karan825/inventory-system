@@ -8,10 +8,41 @@ import models
 import schemas
 from database import engine, get_db
 
+import asyncio
+import os
+import urllib.request
+from contextlib import asynccontextmanager
+
 # Create DB tables
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Inventory & Order Management API")
+# Background self-ping task to prevent Render from sleeping
+async def self_ping():
+    port = os.getenv("PORT", "8000")
+    url = f"http://localhost:{port}/health"
+    while True:
+        await asyncio.sleep(600)  # Wait 10 minutes
+        try:
+            req = urllib.request.Request(url)
+            with urllib.request.urlopen(req) as response:
+                pass
+        except Exception as e:
+            print(f"Self-ping failed: {e}")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Start the self-ping task
+    task = asyncio.create_task(self_ping())
+    yield
+    # Cancel the task on shutdown
+    task.cancel()
+
+app = FastAPI(title="Inventory & Order Management API", lifespan=lifespan)
+
+@app.get("/health")
+def health_check():
+    """Endpoint for UptimeRobot and self-ping"""
+    return {"status": "ok", "message": "Server is alive"}
 
 # Allow CORS for frontend
 app.add_middleware(
