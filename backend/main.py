@@ -39,7 +39,7 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="Inventory & Order Management API", lifespan=lifespan)
 
-@app.get("/health")
+@app.api_route("/health", methods=["GET", "HEAD"])
 def health_check():
     """Endpoint for UptimeRobot and self-ping"""
     return {"status": "ok", "message": "Server is alive"}
