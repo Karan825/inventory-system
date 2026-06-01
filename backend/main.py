@@ -16,32 +16,11 @@ from contextlib import asynccontextmanager
 # Create DB tables
 models.Base.metadata.create_all(bind=engine)
 
-# Background self-ping task to prevent Render from sleeping
-async def self_ping():
-    port = os.getenv("PORT", "8000")
-    url = f"http://localhost:{port}/health"
-    while True:
-        await asyncio.sleep(600)  # Wait 10 minutes
-        try:
-            req = urllib.request.Request(url)
-            with urllib.request.urlopen(req) as response:
-                pass
-        except Exception as e:
-            print(f"Self-ping failed: {e}")
-
-@asynccontextmanager
-async def lifespan(app: FastAPI):
-    # Start the self-ping task
-    task = asyncio.create_task(self_ping())
-    yield
-    # Cancel the task on shutdown
-    task.cancel()
-
-app = FastAPI(title="Inventory & Order Management API", lifespan=lifespan)
+app = FastAPI(title="Inventory & Order Management API")
 
 @app.api_route("/health", methods=["GET", "HEAD"])
 def health_check():
-    """Endpoint for UptimeRobot and self-ping"""
+    """Endpoint for UptimeRobot"""
     return {"status": "ok", "message": "Server is alive"}
 
 # Allow CORS for frontend
