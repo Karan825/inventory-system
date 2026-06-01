@@ -42,7 +42,7 @@ export default function Dashboard() {
       
       <div className="dashboard-grid">
         <div className="glass-panel stat-card">
-          <div style={{ color: '#818CF8' }}><Package size={32} /></div>
+          <div style={{ color: '#ffffff' }}><Package size={32} /></div>
           <div>
             <div className="stat-value">{stats.totalProducts}</div>
             <div className="stat-label">Total Products</div>
@@ -50,7 +50,7 @@ export default function Dashboard() {
         </div>
         
         <div className="glass-panel stat-card">
-          <div style={{ color: '#34D399' }}><Users size={32} /></div>
+          <div style={{ color: '#ffffff' }}><Users size={32} /></div>
           <div>
             <div className="stat-value">{stats.totalCustomers}</div>
             <div className="stat-label">Total Customers</div>
@@ -58,7 +58,7 @@ export default function Dashboard() {
         </div>
         
         <div className="glass-panel stat-card">
-          <div style={{ color: '#FBBF24' }}><ShoppingCart size={32} /></div>
+          <div style={{ color: '#ffffff' }}><ShoppingCart size={32} /></div>
           <div>
             <div className="stat-value">{stats.totalOrders}</div>
             <div className="stat-label">Total Orders</div>
@@ -66,7 +66,7 @@ export default function Dashboard() {
         </div>
         
         <div className="glass-panel stat-card">
-          <div style={{ color: '#F87171' }}><AlertTriangle size={32} /></div>
+          <div style={{ color: '#ffffff' }}><AlertTriangle size={32} /></div>
           <div>
             <div className="stat-value">{stats.lowStock}</div>
             <div className="stat-label">Low Stock Items (&lt;10)</div>

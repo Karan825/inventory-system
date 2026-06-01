@@ -106,7 +106,7 @@ export default function Products() {
                 </td>
                 <td>
                   <div style={{ display: 'flex', gap: '8px' }}>
-                    <button className="btn" style={{ background: 'rgba(255,255,255,0.1)' }} onClick={() => openEdit(p)}>
+                    <button className="btn" onClick={() => openEdit(p)}>
                       <Edit size={16} />
                     </button>
                     <button className="btn btn-danger" onClick={() => handleDelete(p.id)}>

@@ -6,8 +6,8 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="brand">
-        <div style={{ background: 'var(--primary)', padding: '8px', borderRadius: '8px' }}>
-          <Package size={24} color="white" />
+        <div style={{ background: '#ffffff', padding: '8px', display: 'flex', alignItems: 'center' }}>
+          <Package size={24} color="black" />
         </div>
         NexInvent
       </div>

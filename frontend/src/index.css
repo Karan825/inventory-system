@@ -1,16 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
 :root {
-  --primary: #4F46E5; /* Indigo */
-  --primary-hover: #4338CA;
-  --bg-color: #0F172A; /* Slate 900 */
-  --card-bg: rgba(30, 41, 59, 0.7); /* Slate 800 with opacity */
-  --text-main: #F8FAFC;
-  --text-muted: #94A3B8;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --success: #10B981;
-  --danger: #EF4444;
-  --warning: #F59E0B;
+  --primary: #ffffff;
+  --bg-color: #000000;
+  --card-bg: #000000;
+  --text-main: #ffffff;
+  --text-muted: #888888;
+  --border-color: #ffffff;
 }
 
 * {
@@ -28,14 +24,13 @@ body {
   flex-direction: column;
 }
 
-/* Glassmorphism utility classes */
+/* Brutalist Black & White Panels */
 .glass-panel {
-  background: var(--card-bg);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--bg-color);
   border: 1px solid var(--border-color);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 0px;
+  box-shadow: 4px 4px 0px var(--border-color);
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
 /* Layout */
@@ -47,7 +42,7 @@ body {
 
 .sidebar {
   width: 260px;
-  background: rgba(15, 23, 42, 0.8);
+  background: var(--bg-color);
   border-right: 1px solid var(--border-color);
   display: flex;
   flex-direction: column;
@@ -64,14 +59,13 @@ body {
 h1, h2, h3 {
   font-weight: 600;
   letter-spacing: -0.02em;
+  text-transform: uppercase;
 }
 
 h1 {
-  font-size: 28px;
+  font-size: 32px;
   margin-bottom: 24px;
-  background: linear-gradient(to right, #818CF8, #C084FC);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--text-main);
 }
 
 h2 {
@@ -86,33 +80,41 @@ h2 {
   justify-content: center;
   gap: 8px;
   padding: 10px 20px;
-  border-radius: 8px;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 14px;
+  text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s ease;
-  border: none;
+  border: 1px solid var(--border-color);
   outline: none;
+  background: transparent;
+  color: var(--text-main);
+  border-radius: 0px;
+}
+
+.btn:hover {
+  background: var(--text-main);
+  color: var(--bg-color);
 }
 
 .btn-primary {
   background: var(--primary);
-  color: white;
-  box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.39);
+  color: var(--bg-color);
 }
 
 .btn-primary:hover {
-  background: var(--primary-hover);
-  transform: translateY(-1px);
+  background: transparent;
+  color: var(--primary);
 }
 
 .btn-danger {
-  background: var(--danger);
-  color: white;
+  background: transparent;
+  color: var(--text-main);
 }
 
 .btn-danger:hover {
-  background: #DC2626;
+  background: var(--text-main);
+  color: var(--bg-color);
 }
 
 /* Cards & Dashboard */
@@ -128,26 +130,30 @@ h2 {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  transition: transform 0.2s;
 }
 
 .stat-card:hover {
-  transform: translateY(-4px);
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px var(--border-color);
 }
 
 .stat-value {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 700;
+  letter-spacing: -0.05em;
 }
 
 .stat-label {
   color: var(--text-muted);
   font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 /* Tables */
 .table-container {
   overflow-x: auto;
+  margin-bottom: 24px;
 }
 
 table {
@@ -162,15 +168,16 @@ th, td {
 }
 
 th {
-  color: var(--text-muted);
-  font-weight: 500;
-  font-size: 14px;
+  color: var(--text-main);
+  font-weight: 600;
+  font-size: 12px;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  border-bottom: 2px solid var(--border-color);
 }
 
 tr:hover td {
-  background: rgba(255, 255, 255, 0.02);
+  background: #111111;
 }
 
 /* Forms */
@@ -182,24 +189,28 @@ tr:hover td {
   display: block;
   margin-bottom: 8px;
   font-size: 14px;
-  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-main);
 }
 
 .form-control {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(15, 23, 42, 0.5);
+  background: transparent;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
   color: var(--text-main);
   font-family: inherit;
   font-size: 14px;
-  transition: border-color 0.2s;
+  transition: all 0.2s;
+  border-radius: 0px;
 }
 
 .form-control:focus {
   outline: none;
-  border-color: var(--primary);
+  background: var(--text-main);
+  color: var(--bg-color);
 }
 
 .modal-overlay {
@@ -208,8 +219,7 @@ tr:hover td {
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  backdrop-filter: blur(4px);
+  background: rgba(0, 0, 0, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -226,19 +236,24 @@ tr:hover td {
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  margin-top: 24px;
+  margin-top: 32px;
 }
 
+/* Badges */
 .badge {
   padding: 4px 8px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
+  border: 1px solid var(--border-color);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: transparent;
+  color: var(--text-main);
 }
 
-.badge-success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
-.badge-warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
-.badge-danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+.badge-success { background: var(--text-main); color: var(--bg-color); }
+.badge-warning { border-style: dashed; }
+.badge-danger { text-decoration: line-through; color: var(--text-muted); } /* Strikethrough for out of stock */
 
 /* Navigation */
 .nav-link {
@@ -248,14 +263,17 @@ tr:hover td {
   padding: 12px 16px;
   color: var(--text-muted);
   text-decoration: none;
-  border-radius: 8px;
   transition: all 0.2s;
   margin-bottom: 8px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
 }
 
 .nav-link:hover, .nav-link.active {
-  background: rgba(79, 70, 229, 0.1);
-  color: var(--primary);
+  color: var(--text-main);
+  border: 1px solid var(--border-color);
 }
 
 .brand {
@@ -266,4 +284,6 @@ tr:hover td {
   display: flex;
   align-items: center;
   gap: 12px;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
 }
