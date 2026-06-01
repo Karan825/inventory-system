@@ -55,7 +55,7 @@ export default function Customers() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+      <div className="page-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
         <h1>Customers</h1>
         <button className="btn btn-primary" onClick={() => setShowModal(true)}>
           <Plus size={18} /> Add Customer
